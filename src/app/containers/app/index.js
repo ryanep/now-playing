@@ -10,7 +10,7 @@ class App extends Component {
         return (
             <div className={styles.app}>
                 <Background />
-                <Song />
+                <Song artist={'Example Artist'} title={'Example Title'} artwork={'https://i.scdn.co/image/49535e5c509f9a1f48a034f19d48a89b22872b29'} />
             </div>
         )
     }

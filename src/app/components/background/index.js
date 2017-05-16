@@ -7,7 +7,7 @@ export default class Background extends Component {
     render() {
         return (
             <div className={styles.background}>
-                Background
+            
             </div>
         )
     }
