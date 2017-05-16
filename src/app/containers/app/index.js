@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Background from '../../components/background';
+import Song from '../../components/song';
 import styles from './style.scss';
 
 class App extends Component {
@@ -7,7 +9,8 @@ class App extends Component {
     render() {
         return (
             <div className={styles.app}>
-                App
+                <Background />
+                <Song />
             </div>
         )
     }
