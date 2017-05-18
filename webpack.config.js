@@ -35,7 +35,7 @@ module.exports = [
     },
     plugins: [
       new ExtractTextPlugin({ filename: "style.css", allChunks: true }),
-      // new webpack.optimize.UglifyJsPlugin(),
+      new webpack.optimize.UglifyJsPlugin(),
       new webpack.optimize.OccurrenceOrderPlugin()
     ]
   }
