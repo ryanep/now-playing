@@ -2,12 +2,6 @@ import * as actionTypes from "../constants/action-types";
 import TokenService from "../services/token";
 const tokenService = new TokenService();
 
-export function testAuth() {
-  return {
-    type: actionTypes.TEST_AUTH
-  };
-}
-
 export function accessTokenRequested() {
   return {
     type: actionTypes.ACCESS_TOKEN_REQUEST
