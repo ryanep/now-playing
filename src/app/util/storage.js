@@ -9,7 +9,6 @@ export default store => {
     if (accessToken && refreshToken) {
       localStorage.setItem(SPOTIFY_ACCESS_TOKEN, accessToken);
       localStorage.setItem(SPOTIFY_REFRESH_TOKEN, refreshToken);
-      console.log("written");
     }
   });
 };

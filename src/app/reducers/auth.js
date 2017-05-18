@@ -3,10 +3,7 @@ import {
   SPOTIFY_REFRESH_TOKEN
 } from "../constants/storage-keys";
 
-import {
-  ACCESS_TOKEN_SUCCESS,
-  ACCESS_TOKEN_FAILURE
-} from "../constants/action-types";
+import * as actionTypes from "../constants/action-types";
 
 import { TEST_AUTH } from "../constants/action-types";
 
@@ -17,11 +14,16 @@ const initialState = {
 
 export default function auth(state = initialState, action) {
   switch (action.type) {
-    case ACCESS_TOKEN_SUCCESS:
+    case actionTypes.ACCESS_TOKEN_SUCCESS:
       return {
         ...state,
         accessToken: action.payload.accessToken,
         refreshToken: action.payload.refreshToken
+      };
+    case actionTypes.ACCESS_TOKEN_REFRESHED:
+      return {
+        ...state,
+        accessToken: action.payload.accessToken
       };
     default:
       return state;

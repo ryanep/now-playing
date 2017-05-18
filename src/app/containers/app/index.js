@@ -12,6 +12,8 @@ import Login from "../../components/login";
 class App extends Component {
   componentDidMount() {
     this.getTokenFromCallbackHandler();
+
+    this.props.getAccessTokenFromRefresh();
   }
 
   getTokenFromCallbackHandler() {
@@ -19,7 +21,7 @@ class App extends Component {
       let { code } = queryString.parse(window.location.search);
 
       if (code) {
-        this.props.getAccessToken(code);
+        this.props.getAccessTokenFromCode(code);
       }
     }
   }
@@ -41,7 +43,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAccessToken: code => dispatch(authActions.getAccessToken(code))
+    getAccessTokenFromCode: code =>
+      dispatch(authActions.getAccessTokenFromCode(code)),
+    getAccessTokenFromRefresh: () =>
+      dispatch(authActions.getAccessTokenFromRefresh())
   };
 };
 
