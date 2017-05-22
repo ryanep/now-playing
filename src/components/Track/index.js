@@ -1,6 +1,6 @@
 import React from "react";
-import Background from "../background";
-import Song from "../song";
+import Background from "../Background";
+import Song from "../Song";
 
 export default props => (
   <div>

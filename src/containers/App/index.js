@@ -1,19 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Background from "../../components/background";
-import Song from "../../components/song";
 import styles from "./style.scss";
 import * as authActions from "../../actions/auth";
 import queryString from "query-string";
 
-import Track from "../../components/track";
-import Login from "../../components/login";
+import Track from "../../components/Track";
+import Login from "../../components/Login";
 
 class App extends Component {
   componentDidMount() {
     this.getTokenFromCallbackHandler();
-
-    this.props.getAccessTokenFromRefresh();
   }
 
   getTokenFromCallbackHandler() {
