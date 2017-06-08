@@ -1,12 +1,16 @@
 import React from "react";
+import Progress from "../Progress";
 import styles from "./style.scss";
 
 export default ({ title, artist, artwork, added }) => (
   <div className={styles.song}>
-    <img src={artwork} className={styles.artwork} alt={title} />
-    <div className={styles.track}>
-      <h1 className={styles.title}>{title}</h1>
-      <h2 className={styles.artist}>{artist}</h2>
+    <div className={styles.album}>
+      <img src={artwork} className={styles.artwork} alt={title} />
+      <div className={styles.track}>
+        <h1 className={styles.title}>{title}</h1>
+        <h2 className={styles.artist}>{artist}</h2>
+      </div>
+      <Progress />
     </div>
     {added &&
       <div className={styles.info}>
