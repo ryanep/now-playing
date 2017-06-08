@@ -1,0 +1,21 @@
+.progress {
+	position: absolute;
+	left: 2rem;
+	right: 2rem;
+	bottom: 2rem;
+	width: calc(100% - 4rem);
+	height: 1rem;
+	border-radius: 5rem;
+	overflow: hidden;
+	z-index: 2;
+
+	&::-webkit-progress-bar {
+		appearance: none;
+		height: 1rem;
+		background-color: #404040;
+	}
+
+	&::-webkit-progress-value {
+		background-color: #2ab759;
+	}
+}
