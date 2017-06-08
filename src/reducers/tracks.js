@@ -1,4 +1,4 @@
-import * as types from "../constants/action-types";
+import * as actionTypes from "../constants/action-types";
 
 const initialState = {
   currentTrack: {},
@@ -7,7 +7,7 @@ const initialState = {
 
 export default function tracks(state = initialState, action) {
   switch (action.type) {
-    case types.TRACK_CHANGED:
+    case actionTypes.TRACK_CHANGED:
       return { ...state, currentTrack: action.track };
     default:
       return state;

@@ -2,15 +2,13 @@ import React from "react";
 import Background from "../Background";
 import Song from "../Song";
 
-export default props => (
+export default ({ track }) => (
   <div>
     <Background />
     <Song
-      artist={"Example Artist"}
-      title={"Example Title"}
-      artwork={
-        "https://i.scdn.co/image/49535e5c509f9a1f48a034f19d48a89b22872b29"
-      }
+      artist={track.item.artists[0].name}
+      title={track.item.name}
+      artwork={track.item.album.images[0].url}
     />
   </div>
 );

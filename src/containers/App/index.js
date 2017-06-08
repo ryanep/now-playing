@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styles from "./style.scss";
 import * as authActions from "../../actions/auth";
+import * as trackActions from "../../actions/tracks";
 import queryString from "query-string";
 
 import Track from "../../components/Track";
@@ -22,10 +23,21 @@ class App extends Component {
     }
   }
 
+  pollSpotifyAPI() {
+    setTimeout(() => {
+      this.props.getCurrentTrack();
+    }, 10000);
+  }
+
   render() {
+    console.log("rendering");
+    if (this.props.accessToken) {
+      this.pollSpotifyAPI();
+    }
+
     return (
       <div className={styles.app}>
-        {this.props.accessToken ? <Track /> : <Login />}
+        {this.props.accessToken && this.props.currentTrack.item ? <Track track={this.props.currentTrack} /> : <Login />}
       </div>
     );
   }
@@ -33,6 +45,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
+    currentTrack: state.tracks.currentTrack,
     accessToken: state.auth.accessToken
   };
 };
@@ -42,7 +55,9 @@ const mapDispatchToProps = dispatch => {
     getAccessTokenFromCode: code =>
       dispatch(authActions.getAccessTokenFromCode(code)),
     getAccessTokenFromRefresh: () =>
-      dispatch(authActions.getAccessTokenFromRefresh())
+      dispatch(authActions.getAccessTokenFromRefresh()),
+    getCurrentTrack: () =>
+      dispatch(trackActions.getCurrentTrack())
   };
 };
 
