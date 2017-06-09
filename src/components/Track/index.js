@@ -8,7 +8,7 @@ export default ({ track }) => (
     <Song
       artist={track.item.artists[0].name}
       title={track.item.name}
-      artwork={track.item.album.images[0].url}
+      artwork={track.item.album.images}
     />
   </div>
 );

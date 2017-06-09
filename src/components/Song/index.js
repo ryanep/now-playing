@@ -1,11 +1,14 @@
 import React from "react";
 import Progress from "../Progress";
+import ProgressiveImage from 'react-progressive-image';
 import styles from "./style.scss";
 
 export default ({ title, artist, artwork, added }) => (
   <div className={styles.song}>
     <div className={styles.album}>
-      <img src={artwork} className={styles.artwork} alt={title} />
+      <ProgressiveImage src={artwork[0].url} placeholder={artwork[artwork.length - 1].url}>
+        {(src) => <img src={src} alt={`${artist} - ${title}`} className={styles.artwork} />}
+      </ProgressiveImage>
       <div className={styles.track}>
         <h1 className={styles.title}>{title}</h1>
         <h2 className={styles.artist}>{artist}</h2>

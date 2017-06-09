@@ -17,5 +17,6 @@
 
 	&::-webkit-progress-value {
 		background-color: #2ab759;
+		transition: width 1s linear;
 	}
 }
