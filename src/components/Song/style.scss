@@ -10,6 +10,9 @@
     position: relative;
     display: inline-block;
     margin-bottom: 3rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
 
     &::after {
         position: absolute;
@@ -29,8 +32,6 @@
     width: 70vw;
     height: auto;
     max-width: 64rem;
-    border-radius: 3px;
-    box-shadow: 0 2px 20px rgba(0,0,0,0.5);
 }
 
 .track {

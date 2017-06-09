@@ -1,0 +1,44 @@
+.visualiser {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 20rem;
+	display: flex;
+	z-index: 1;
+	align-items: flex-end;
+	opacity: 0.1;
+}
+
+.bar {
+	width: 10%;
+	height: 20rem;
+	background-color: #ffffff;
+	animation: sound 0ms -2000ms linear infinite alternate;
+	margin-left: 2px;
+	
+	&:first-child {
+		margin-left: 0;
+	}
+}
+
+@keyframes sound {
+    0% {
+       opacity: 0.35;
+        height: 0.3rem;
+    }
+    100% {
+        opacity: 1;
+        height: 20rem;
+    }
+}
+
+.bar:nth-child(1)  { animation-duration: 474ms; }
+.bar:nth-child(2)  { animation-duration: 433ms; }
+.bar:nth-child(3)  { animation-duration: 407ms; }
+.bar:nth-child(4)  { animation-duration: 458ms; }
+.bar:nth-child(5)  { animation-duration: 400ms; }
+.bar:nth-child(6)  { animation-duration: 427ms; }
+.bar:nth-child(7)  { animation-duration: 441ms; }
+.bar:nth-child(8)  { animation-duration: 419ms; }
+.bar:nth-child(9)  { animation-duration: 487ms; }
+.bar:nth-child(10) { animation-duration: 442ms; }
