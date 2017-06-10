@@ -10,13 +10,13 @@
 }
 
 .bar {
-	width: 10%;
 	height: 20rem;
 	background-color: #ffffff;
 	animation: sound 0ms -2000ms linear infinite alternate;
 	margin-left: 2px;
+	flex-grow: 1;
 
-	@for $i from 1 through 10 {
+	@for $i from 1 through 12 {
 		&:nth-child(#{$i}) {
 			animation-duration: #{random(500)+400}ms;
 		}
