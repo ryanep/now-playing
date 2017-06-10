@@ -16,7 +16,7 @@ export default class Progress extends Component {
 		setTimeout(() => {
 			this.setState({ progress: this.state.progress + 1 });
 			this.updateProgress();
-		}, 500);
+		}, 1000);
 	}
 
 	render() {
