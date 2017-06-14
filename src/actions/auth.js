@@ -58,6 +58,7 @@ export function getAccessTokenFromCode(code) {
         if (error) throw new Error(error_description);
 
         const { refresh_token, access_token } = response;
+        window.location.replace("/");
         dispatch(accessTokenSuccess({ access_token, refresh_token }));
       })
       .catch(e => console.error(e));
