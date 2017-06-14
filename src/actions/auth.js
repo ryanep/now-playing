@@ -38,10 +38,9 @@ export function getAccessTokenFromRefresh() {
     dispatch(accessTokenRequested());
 
     tokenService.getAccessTokenFromRefreshToken().then(response => {
-      const { error } = response;
+      const { error, access_token } = response;
       if (error) throw error;
 
-      let { access_token } = response;
       dispatch(accessTokenRefreshed({ access_token }));
     });
   };
@@ -54,10 +53,14 @@ export function getAccessTokenFromCode(code) {
     tokenService
       .getAccessTokenFromCode(code)
       .then(response => {
-        const { error, error_description } = response;
+        const {
+          error,
+          error_description,
+          refresh_token,
+          access_token
+        } = response;
         if (error) throw new Error(error_description);
 
-        const { refresh_token, access_token } = response;
         window.location.replace("/");
         dispatch(accessTokenSuccess({ access_token, refresh_token }));
       })
