@@ -12,6 +12,9 @@ import Login from "../../components/Login";
 class App extends Component {
   componentDidMount() {
     this.getTokenFromCallbackHandler();
+    if (this.props.accessToken) {
+      this.pollSpotifyAPI();
+    }
   }
 
   getTokenFromCallbackHandler() {
@@ -25,9 +28,9 @@ class App extends Component {
   }
 
   pollSpotifyAPI() {
+    this.props.getCurrentTrack();
     setTimeout(
       () => {
-        this.props.getCurrentTrack();
         this.pollSpotifyAPI();
       },
       5000
@@ -35,10 +38,6 @@ class App extends Component {
   }
 
   render() {
-    if (this.props.accessToken) {
-      this.props.getCurrentTrack();
-    }
-
     const { item } = this.props.currentTrack;
     const title = item
       ? `${item.name} - ${item.artists[0].name}`
