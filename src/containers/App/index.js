@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Helmet from 'react-helmet';
+import Helmet from "react-helmet";
 import styles from "./style.scss";
 import * as authActions from "../../actions/auth";
 import * as trackActions from "../../actions/tracks";
@@ -23,26 +23,30 @@ class App extends Component {
       }
     }
   }
-
-  pollSpotifyAPI() {
-    setTimeout(() => {
-      this.props.getCurrentTrack();
-      this.pollSpotifyAPI();
-    }, 5000);
-  }
+  //
+  // pollSpotifyAPI() {
+  //   setTimeout(() => {
+  //     this.props.getCurrentTrack();
+  //     this.pollSpotifyAPI();
+  //   }, 5000);
+  // }
 
   render() {
     if (this.props.accessToken) {
-      this.pollSpotifyAPI();
+      this.props.getCurrentTrack();
     }
 
     const { item } = this.props.currentTrack;
-    const title = item ? `${item.name} - ${item.artists[0].name}` : "Login - Now Playing";
+    const title = item
+      ? `${item.name} - ${item.artists[0].name}`
+      : "Login - Now Playing";
 
     return (
       <div className={styles.app}>
         <Helmet title={title} />
-        {this.props.accessToken && this.props.currentTrack.item ? <Track track={this.props.currentTrack} /> : <Login />}
+        {this.props.accessToken && this.props.currentTrack.item
+          ? <Track track={this.props.currentTrack} />
+          : <Login />}
       </div>
     );
   }
@@ -61,8 +65,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(authActions.getAccessTokenFromCode(code)),
     getAccessTokenFromRefresh: () =>
       dispatch(authActions.getAccessTokenFromRefresh()),
-    getCurrentTrack: () =>
-      dispatch(trackActions.getCurrentTrack())
+    getCurrentTrack: () => dispatch(trackActions.getCurrentTrack())
   };
 };
 
