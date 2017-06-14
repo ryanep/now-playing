@@ -23,13 +23,16 @@ class App extends Component {
       }
     }
   }
-  //
-  // pollSpotifyAPI() {
-  //   setTimeout(() => {
-  //     this.props.getCurrentTrack();
-  //     this.pollSpotifyAPI();
-  //   }, 5000);
-  // }
+
+  pollSpotifyAPI() {
+    setTimeout(
+      () => {
+        this.props.getCurrentTrack();
+        this.pollSpotifyAPI();
+      },
+      5000
+    );
+  }
 
   render() {
     if (this.props.accessToken) {

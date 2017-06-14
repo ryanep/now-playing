@@ -13,14 +13,14 @@ export function getCurrentTrack() {
         let { item, error } = response;
         if (error) throw error;
 
-        if (currentTrackID !== response.data.item.id) {
+        if (currentTrackID !== item.id) {
           dispatch(getCurrentTrackSuccess(response));
-          currentTrackID = response.data.item.id;
+          currentTrackID = item.id;
         }
       })
       .catch(err => {
         console.log(err);
-        throw Error("Error fetching current track");
+        dispatch(getCurrentTrackFailure());
       });
   };
 }
@@ -34,6 +34,12 @@ export function trackRequested() {
 export function getCurrentTrackSuccess(track) {
   return {
     type: actionTypes.TRACK_CHANGED,
-    track: track.data
+    track
+  };
+}
+
+export function getCurrentTrackFailure() {
+  return {
+    type: actionTypes.TRACK_REQUEST_FAILURE
   };
 }

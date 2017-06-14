@@ -10,6 +10,9 @@ export default function tracks(state = initialState, action) {
     case actionTypes.TRACK_CHANGED:
       state.previousTracks.push(state.currentTrack);
       return { ...state, currentTrack: action.track };
+    case actionTypes.TRACK_REQUEST_FAILURE:
+      // Do API error handling here
+      return { ...state };
     default:
       return state;
   }
