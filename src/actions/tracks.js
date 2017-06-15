@@ -7,28 +7,39 @@ let currentTrackID = 0;
 export function getCurrentTrack() {
   return dispatch => {
     dispatch(trackRequested());
-    spotifyService.getCurrentTrack()
+    spotifyService
+      .getCurrentTrack()
       .then(response => {
-        if (currentTrackID !== response.data.item.id) {
+        let { item, error } = response;
+        if (error) throw error;
+
+        if (currentTrackID !== item.id) {
           dispatch(getCurrentTrackSuccess(response));
-          currentTrackID = response.data.item.id;
+          currentTrackID = item.id;
         }
       })
       .catch(err => {
-        throw Error("Error fetching current track");
+        console.log(err);
+        dispatch(getCurrentTrackFailure());
       });
-  }
+  };
 }
 
 export function trackRequested() {
   return {
     type: actionTypes.TRACK_REQUEST
-  }
+  };
 }
 
 export function getCurrentTrackSuccess(track) {
   return {
-	  type: actionTypes.TRACK_CHANGED,
-    track: track.data
-  }
+    type: actionTypes.TRACK_CHANGED,
+    track
+  };
+}
+
+export function getCurrentTrackFailure() {
+  return {
+    type: actionTypes.TRACK_REQUEST_FAILURE
+  };
 }

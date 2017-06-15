@@ -9,16 +9,8 @@ export default class TokenService {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `code=${code}`
     })
-      .then(response => {
-        if (!response.ok) {
-          console.log("not okay hun");
-          throw Error(response.statusText);
-        }
-        return response;
-      })
       .then(response => response.json())
-      .then(response => ({ data: response }))
-      .catch(e => ({ error: e }));
+      .catch(error => console.log(error));
   }
 
   getAccessTokenFromRefreshToken() {
@@ -27,16 +19,6 @@ export default class TokenService {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `refresh_token=${refresh_token}`
-    })
-      .then(response => {
-        if (!response.ok) {
-          console.log("not okay hun");
-          throw Error(response.statusText);
-        }
-        return response;
-      })
-      .then(response => response.json())
-      .then(response => ({ data: response }))
-      .catch(e => ({ error: e }));
+    }).then(response => response.json());
   }
 }
