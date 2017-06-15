@@ -2,7 +2,7 @@
     height: 100vh;
     width: 100vw;
     display: block;
-    background-color: black;
+    background-color: #666666;
     z-index: 0;
 }
 
@@ -13,8 +13,7 @@
     position: absolute;
     top: 0;
     left: 0;
-
-    opacity: 1;
+    opacity: 0.5;
     transition: opacity 0.5s ease-in-out;
 }
 
