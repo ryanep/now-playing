@@ -4,7 +4,7 @@ import Visualiser from "../Visualiser";
 import ProgressiveImage from 'react-progressive-image';
 import styles from "./style.scss";
 
-export default ({ title, artist, artwork, added }) => (
+export default ({ title, artist, artwork, added, isPlaying, progress, duration }) => (
   <div className={styles.song}>
     <div className={styles.album}>
       <ProgressiveImage src={artwork[0].url} placeholder={artwork[artwork.length - 1].url}>
@@ -14,8 +14,8 @@ export default ({ title, artist, artwork, added }) => (
         <h1 className={styles.title}>{title}</h1>
         <h2 className={styles.artist}>{artist}</h2>
       </div>
-      <Progress />
-      <Visualiser />
+      <Progress isPlaying={isPlaying} progress={progress} duration={duration} />
+      <Visualiser isPlaying={isPlaying} />
     </div>
     {added &&
       <div className={styles.info}>

@@ -38,15 +38,15 @@ class App extends Component {
   }
 
   render() {
-    const { item } = this.props.currentTrack;
-    const title = item
-      ? `${item.name} - ${item.artists[0].name}`
+    const { title, artist } = this.props.currentTrack;
+    const trackTitle = title
+      ? `${title} - ${artist}`
       : "Login - Now Playing";
 
     return (
       <div className={styles.app}>
-        <Helmet title={title} />
-        {this.props.accessToken && this.props.currentTrack.item
+        <Helmet title={trackTitle} />
+        {this.props.accessToken && this.props.currentTrack.title
           ? <Track track={this.props.currentTrack} />
           : <Login />}
       </div>
@@ -55,6 +55,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state.tracks.currentTrack);
   return {
     currentTrack: state.tracks.currentTrack,
     accessToken: state.auth.accessToken

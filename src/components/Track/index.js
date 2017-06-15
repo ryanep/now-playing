@@ -4,11 +4,14 @@ import Song from "../Song";
 
 export default ({ track }) => (
   <div>
-    <Background img={track.item.album.images[track.item.album.images.length - 1].url} />
+    <Background img={track.artwork[track.artwork.length - 1].url} />
     <Song
-      artist={track.item.artists[0].name}
-      title={track.item.name}
-      artwork={track.item.album.images}
+      artist={track.artist}
+      title={track.title}
+      artwork={track.artwork}
+      isPlaying={track.isPlaying}
+      progress={track.progress}
+      duration={track.duration}
     />
   </div>
 );
