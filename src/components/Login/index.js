@@ -1,5 +1,6 @@
 import React from "react";
 import queryString from "query-string";
+import styles from './style.scss';
 
 let options = {
   client_id: "4ea54ce3001542bdb54efbff4e75c91b",
@@ -9,7 +10,7 @@ let options = {
 };
 
 export default () => (
-  <a
+  <a className={styles.button}
     href={
       `https://accounts.spotify.com/authorize?${queryString.stringify(options)}`
     }
