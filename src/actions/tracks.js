@@ -16,6 +16,8 @@ export function getCurrentTrack() {
         if (currentTrackID !== item.id) {
           dispatch(getCurrentTrackSuccess(response));
           currentTrackID = item.id;
+        } else {
+          dispatch(trackUpdated(response));
         }
       })
       .catch(err => {
@@ -29,6 +31,13 @@ export function trackRequested() {
   return {
     type: actionTypes.TRACK_REQUEST
   };
+}
+
+export function trackUpdated(track) {
+  return {
+    type: actionTypes.TRACK_UPDATED,
+    track
+  }
 }
 
 export function getCurrentTrackSuccess(track) {
