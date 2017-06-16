@@ -4,29 +4,29 @@ import Visualiser from "../Visualiser";
 import ProgressiveImage from 'react-progressive-image';
 import styles from "./style.scss";
 
-export default ({ track }) => (
+export default ({ title, artist, artwork, added, isPlaying, progress, duration }) => (
   <div className={styles.song}>
     <div className={styles.album}>
-      <ProgressiveImage src={track.artwork[0].url} placeholder={track.artwork[track.artwork.length - 1].url}>
-        {(src) => <img src={src} alt={`${track.artist} - ${track.title}`} className={styles.artwork} />}
+      <ProgressiveImage src={artwork[0].url} placeholder={artwork[artwork.length - 1].url}>
+        {(src) => <img src={src} alt={`${artist} - ${title}`} className={styles.artwork} />}
       </ProgressiveImage>
       <div className={styles.track}>
-        <h1 className={styles.title}>{track.title}</h1>
-        <h2 className={styles.artist}>{track.artist}</h2>
+        <h1 className={styles.title}>{title}</h1>
+        <h2 className={styles.artist}>{artist}</h2>
       </div>
-      <Progress isPlaying={track.isPlaying} progress={track.progress} duration={track.duration} />
-      <Visualiser isPlaying={track.isPlaying} />
+      <Progress isPlaying={isPlaying} progress={progress} duration={duration} />
+      <Visualiser isPlaying={isPlaying} />
     </div>
-    {track.added &&
+    {added &&
       <div className={styles.info}>
         <img
           className={styles.photo}
-          src={track.added && track.added.photo}
-          alt={track.added.name}
+          src={added && added.photo}
+          alt={added.name}
         />
           <div className={styles.addedName}>Added by</div>
         <div className={styles.added}>
-          <div className={styles.name}>{track.added && track.added.name}</div>
+          <div className={styles.name}>{added && added.name}</div>
         </div>
       </div>}
   </div>
