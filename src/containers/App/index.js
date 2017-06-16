@@ -55,7 +55,6 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state.tracks.currentTrack);
   return {
     currentTrack: state.tracks.currentTrack,
     accessToken: state.auth.accessToken
