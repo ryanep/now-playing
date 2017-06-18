@@ -3,25 +3,30 @@ import styles from './style.scss';
 
 export default class Progress extends Component {
 
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
-			progress: 0
+			progress: props.progress / 1000
 		};
-
 		this.updateProgress();
+	}
+
+	componentWillReceiveProps(nextProps) {
+		this.setState({ progress: nextProps.progress / 1000 });
 	}
 
 	updateProgress() {
 		setTimeout(() => {
-			this.setState({ progress: this.state.progress + 1 });
+			if (this.props.isPlaying) {
+				this.setState({ progress: this.state.progress + 0.5 });
+			}
 			this.updateProgress();
-		}, 1000);
+		}, 500);
 	}
 
 	render() {
 		return (
-			<progress value={this.state.progress} max="200" className={styles.progress}></progress>
+			<progress value={this.state.progress} max={this.props.duration / 1000} className={styles.progress}></progress>
 		)
 	}
 
