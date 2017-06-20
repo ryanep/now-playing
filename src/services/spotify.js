@@ -13,6 +13,6 @@ export default class SpotifyService {
       }
     })
       .then(response => response.json())
-      .catch(error => console.log(error));
+      .catch(error => Promise.reject(error));
   }
 }
