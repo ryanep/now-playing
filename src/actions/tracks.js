@@ -10,8 +10,7 @@ export function getCurrentTrack() {
     spotifyService
       .getCurrentTrack()
       .then(response => {
-        let { item, error } = response;
-        if (error) throw error;
+        let { item } = response;
 
         if (currentTrackID !== item.id) {
           dispatch(getCurrentTrackSuccess(response));
@@ -37,7 +36,7 @@ export function trackUpdated(track) {
   return {
     type: actionTypes.TRACK_UPDATED,
     track
-  }
+  };
 }
 
 export function getCurrentTrackSuccess(track) {

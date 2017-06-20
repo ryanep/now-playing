@@ -10,7 +10,7 @@ export default class TokenService {
       body: `code=${code}`
     })
       .then(response => response.json())
-      .catch(error => console.log(error));
+      .catch(error => Promise.reject(error));
   }
 
   getAccessTokenFromRefreshToken() {
@@ -19,6 +19,8 @@ export default class TokenService {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `refresh_token=${refresh_token}`
-    }).then(response => response.json());
+    })
+      .then(response => response.json())
+      .catch(error => Promise.reject(error));
   }
 }
