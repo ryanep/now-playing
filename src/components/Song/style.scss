@@ -36,17 +36,11 @@
 
 .track {
     position: absolute;
-    display: flex;
-    align-items: flex-end;
     bottom: 6rem;
     width: 100%;
     padding: 0 2rem;
     text-align: left;
     z-index: 2;
-}
-
-.trackInfo {
-    flex-grow: 1;
 }
 
 .title {
@@ -61,39 +55,16 @@
     }
 }
 
+.trackInfo {
+    display: flex;
+    align-items: flex-end;
+}
+
 .artist {
+    flex-grow: 1;
     margin: 0;
     font-size: 3.8rem;
+    line-height: 1;
     font-weight: 400;
     text-shadow: 0 2px 2px rgba(0,0,0,0.2);
-}
-
-.photo {
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 1rem;
-    width: 4rem;
-    height: auto;
-    border-radius: 0.4rem;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-}
-
-.info {
-    margin-top: 2rem;
-}
-
-.added {
-    display: inline-block;
-    vertical-align: middle;
-    text-align: right;
-    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-}
-
-.addedName {
-    font-size: 1.4rem;
-    margin-bottom: 0.5rem;
-}
-
-.name {
-    font-weight: bold;
 }

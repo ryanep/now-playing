@@ -1,6 +1,7 @@
 import React from "react";
 import Progress from "../Progress";
 import Visualiser from "../Visualiser";
+import AddedBy from "../AddedBy";
 import ProgressiveImage from "react-progressive-image";
 import styles from "./style.scss";
 
@@ -11,18 +12,11 @@ export default ({ title, artist, artwork, added, isPlaying, progress, duration }
         {src => <img src={src} alt={`${artist} - ${title}`} className={styles.artwork} />}
       </ProgressiveImage>
       <div className={styles.track}>
-        <div className={styles.trackInfo}>
           <h1 className={styles.title}>{title}</h1>
+        <div className={styles.trackInfo}>
           <h2 className={styles.artist}>{artist}</h2>
+          {added && <AddedBy {...added} />}
         </div>
-        {added &&
-          <div className={styles.info}>
-            <div className={styles.added}>
-              <div className={styles.addedName}>Added by</div>
-              <div className={styles.name}>{added && added.name}</div>
-            </div>
-            {added.photo && <img className={styles.photo} src={added && added.photo} alt={added.name} />}
-          </div>}
       </div>
       <Progress isPlaying={isPlaying} progress={progress} duration={duration} />
       <Visualiser isPlaying={isPlaying} />
