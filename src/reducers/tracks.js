@@ -23,10 +23,7 @@ export default function tracks(state = initialState, action) {
         }
       };
     case actionTypes.TRACK_UPDATED:
-      const updatedTrack = state.currentTrack;
-      updatedTrack.isPlaying = action.track.is_playing;
-      updatedTrack.progress = action.track.progress_ms;
-      return { ...state, currentTrack: updatedTrack };
+      return { ...state, currentTrack: {...state.currentTrack, isPlaying: action.track.is_playing, progress: action.track.progress_ms} };
     case actionTypes.TRACK_REQUEST_FAILURE:
       // Do API error handling here
       return { ...state };
