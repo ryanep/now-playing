@@ -23,14 +23,23 @@ export default function tracks(state = initialState, action) {
         }
       };
     case actionTypes.TRACK_UPDATED:
-      return { ...state, currentTrack: {...state.currentTrack, isPlaying: action.track.is_playing, progress: action.track.progress_ms} };
+      return {
+        ...state,
+        currentTrack: {
+          ...state.currentTrack,
+          isPlaying: action.track.is_playing,
+          progress: action.track.progress_ms
+        }
+      };
     case actionTypes.TRACK_REQUEST_FAILURE:
       // Do API error handling here
       return { ...state };
     case actionTypes.TRACK_USER_SUCCESS:
       const displayName = action.user.display_name || action.user.id;
-      const photo = action.user.images.length > 0 ? action.user.images[0].url : null;
-      
+      const photo = action.user.images.length > 0
+        ? action.user.images[0].url
+        : null;
+
       return {
         ...state,
         currentTrack: {
