@@ -8,7 +8,6 @@ export default class SpotifyService {
     const response = await fetch(`${this.apiURL}/me/player/currently-playing`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
         Authorization: `Bearer ${accessToken}`
       }
     });
@@ -20,7 +19,6 @@ export default class SpotifyService {
     const response = await fetch(`${this.apiURL}/users/${userID}/playlists/${playlistID}/tracks?offset=${offset}`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
         Authorization: `Bearer ${accessToken}`
       }
     });
@@ -52,7 +50,6 @@ export default class SpotifyService {
     const response = await fetch(`${this.apiURL}/users/${userID}`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
         Authorization: `Bearer ${accessToken}`
       }
     });
