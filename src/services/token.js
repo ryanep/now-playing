@@ -1,26 +1,24 @@
 import { SPOTIFY_REFRESH_TOKEN } from "../constants/storage-keys";
 
 export default class TokenService {
-  baseUrl = "https://cryptic-ridge-94461.herokuapp.com/";
+  baseUrl = "https://cryptic-ridge-94461.herokuapp.com";
 
-  getAccessTokenFromCode(code) {
-    return fetch(`${this.baseUrl}swap`, {
+  async getAccessTokenFromCode(code) {
+    const response = await fetch(`${this.baseUrl}/swap`, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `code=${code}`
-    })
-      .then(response => response.json())
-      .catch(error => Promise.reject(error));
+    });
+    return response.json();
   }
 
-  getAccessTokenFromRefreshToken() {
-    let refresh_token = localStorage.getItem(SPOTIFY_REFRESH_TOKEN);
-    return fetch(`${this.baseUrl}refresh`, {
+  async getAccessTokenFromRefreshToken() {
+    let refreshToken = localStorage.getItem(SPOTIFY_REFRESH_TOKEN);
+    const response = await fetch(`${this.baseUrl}/refresh`, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `refresh_token=${refresh_token}`
-    })
-      .then(response => response.json())
-      .catch(error => Promise.reject(error));
+      body: `refresh_token=${refreshToken}`
+    });
+    return response.json();
   }
 }
