@@ -1,6 +1,5 @@
 import * as actionTypes from "../constants/action-types";
-import TokenService from "../services/token";
-const tokenService = new TokenService();
+import * as tokenService from "../services/token";
 
 export function accessTokenRequested() {
   return {
@@ -27,9 +26,12 @@ export function accessTokenSuccess({ access_token, refresh_token }) {
   };
 }
 
-export function accessTokenFailure() {
+export function accessTokenFailure(error) {
   return {
-    type: actionTypes.ACCESS_TOKEN_FAILURE
+    type: actionTypes.ACCESS_TOKEN_FAILURE,
+    payload: {
+      error
+    }
   };
 }
 
@@ -37,11 +39,11 @@ export function getAccessTokenFromRefresh() {
   return dispatch => {
     dispatch(accessTokenRequested());
 
-    tokenService.getAccessTokenFromRefreshToken().then(response => {
+    return tokenService.getAccessTokenFromRefreshToken().then(response => {
       const { error, access_token } = response;
-      if (error) throw error;
+      if (error) return dispatch(accessTokenFailure(error));
 
-      dispatch(accessTokenRefreshed({ access_token }));
+      return dispatch(accessTokenRefreshed({ access_token }));
     });
   };
 }
@@ -50,20 +52,17 @@ export function getAccessTokenFromCode(code) {
   return dispatch => {
     dispatch(accessTokenRequested());
 
-    tokenService
-      .getAccessTokenFromCode(code)
-      .then(response => {
-        const {
-          error,
-          error_description,
-          refresh_token,
-          access_token
-        } = response;
-        if (error) throw new Error(error_description);
+    return tokenService.getAccessTokenFromCode(code).then(response => {
+      const {
+        error,
+        error_description,
+        refresh_token,
+        access_token
+      } = response;
+      if (error) return dispatch(accessTokenFailure(error));
 
-        window.location.replace("/");
-        dispatch(accessTokenSuccess({ access_token, refresh_token }));
-      })
-      .catch(e => console.error(e));
+      window.location.replace("/");
+      return dispatch(accessTokenSuccess({ access_token, refresh_token }));
+    });
   };
 }
