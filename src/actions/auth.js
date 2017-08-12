@@ -29,9 +29,8 @@ export function accessTokenSuccess({ access_token, refresh_token }) {
 export function accessTokenFailure(error) {
   return {
     type: actionTypes.ACCESS_TOKEN_FAILURE,
-    payload: {
-      error
-    }
+    payload: new Error(error),
+    error: true
   };
 }
 

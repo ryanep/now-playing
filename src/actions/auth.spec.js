@@ -68,9 +68,8 @@ describe("auth actions", () => {
 
     it("returns the error in the payload", () => {
       expect(authActions.accessTokenFailure(error)).toMatchObject({
-        payload: {
-          error
-        }
+        payload: new Error(error),
+        error: true
       });
     });
   });
@@ -127,9 +126,8 @@ describe("auth actions", () => {
           const actions = store.getActions();
           expect(actions[1]).toEqual({
             type: actionTypes.ACCESS_TOKEN_FAILURE,
-            payload: {
-              error
-            }
+            payload: new Error(error),
+            error: true
           });
         });
     });
@@ -211,9 +209,8 @@ describe("auth actions", () => {
           const actions = store.getActions();
           expect(actions[1]).toEqual({
             type: actionTypes.ACCESS_TOKEN_FAILURE,
-            payload: {
-              error
-            }
+            payload: new Error(error),
+            error: true
           });
         });
     });
