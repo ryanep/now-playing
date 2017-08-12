@@ -1,7 +1,6 @@
 import * as actionTypes from "../constants/action-types";
 import * as spotifyURI from "../util/spotify";
-import SpotifyService from "../services/spotify";
-const spotifyService = new SpotifyService();
+import * as spotifyService from "../services/spotify";
 
 let currentTrackID = 0;
 
@@ -18,7 +17,13 @@ export function getCurrentTrack() {
           const trackContext = spotifyURI.parsePlaylistURI(context.uri);
 
           if (trackContext.type === "playlist") {
-            dispatch(getUserAdded(trackContext.userID, trackContext.playlistID, trackID));
+            dispatch(
+              getUserAdded(
+                trackContext.userID,
+                trackContext.playlistID,
+                trackID
+              )
+            );
           }
           dispatch(getCurrentTrackSuccess(response));
           currentTrackID = trackID;
@@ -42,20 +47,27 @@ export function trackRequested() {
 export function trackUpdated(track) {
   return {
     type: actionTypes.TRACK_UPDATED,
-    track
+    payload: {
+      track
+    }
   };
 }
 
 export function getCurrentTrackSuccess(track) {
   return {
     type: actionTypes.TRACK_CHANGED,
-    track
+    payload: {
+      track
+    }
   };
 }
 
 export function getCurrentTrackFailure() {
   return {
-    type: actionTypes.TRACK_REQUEST_FAILURE
+    type: actionTypes.TRACK_REQUEST_FAILURE,
+    payload: {
+      track
+    }
   };
 }
 
@@ -90,7 +102,9 @@ export function trackGetUser(userID) {
 export function trackAddedBySuccess(user) {
   return {
     type: actionTypes.TRACK_USER_SUCCESS,
-    user
+    payload: {
+      user
+    }
   };
 }
 
