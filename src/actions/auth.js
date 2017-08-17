@@ -1,17 +1,11 @@
 import * as actionTypes from "../constants/action-types";
 import * as tokenService from "../services/token";
 
-export function accessTokenRequested() {
+export function accessTokenRequested(code) {
   return {
-    type: actionTypes.ACCESS_TOKEN_REQUEST
-  };
-}
-
-export function accessTokenRefreshed({ access_token }) {
-  return {
-    type: actionTypes.ACCESS_TOKEN_REFRESHED,
+    type: actionTypes.ACCESS_TOKEN_REQUEST,
     payload: {
-      accessToken: access_token
+      code
     }
   };
 }
@@ -34,34 +28,25 @@ export function accessTokenFailure(error) {
   };
 }
 
-export function getAccessTokenFromRefresh() {
-  return dispatch => {
-    dispatch(accessTokenRequested());
-
-    return tokenService.getAccessTokenFromRefreshToken().then(response => {
-      const { error, access_token } = response;
-      if (error) return dispatch(accessTokenFailure(error));
-
-      return dispatch(accessTokenRefreshed({ access_token }));
-    });
+export function refreshTokenRequested() {
+  return {
+    type: actionTypes.REFRESH_TOKEN_REQUEST
   };
 }
 
-export function getAccessTokenFromCode(code) {
-  return dispatch => {
-    dispatch(accessTokenRequested());
+export function refreshTokenSuccess({ access_token }) {
+  return {
+    type: actionTypes.REFRESH_TOKEN_SUCCESS,
+    payload: {
+      accessToken: access_token
+    }
+  };
+}
 
-    return tokenService.getAccessTokenFromCode(code).then(response => {
-      const {
-        error,
-        error_description,
-        refresh_token,
-        access_token
-      } = response;
-      if (error) return dispatch(accessTokenFailure(error));
-
-      window.location.replace("/");
-      return dispatch(accessTokenSuccess({ access_token, refresh_token }));
-    });
+export function refreshTokenFailure(error) {
+  return {
+    type: actionTypes.REFRESH_TOKEN_FAILURE,
+    payload: new Error(error),
+    error: true
   };
 }

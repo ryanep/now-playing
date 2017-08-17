@@ -1,14 +1,7 @@
-import configureMockStore from "redux-mock-store";
-import thunk from "redux-thunk";
-
 import * as authActions from "./auth";
 import * as actionTypes from "../constants/action-types";
 
-const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
-import * as tokenService from "../services/token";
-
-describe("auth actions", () => {
+describe("actions/auth", () => {
   const access_token = "__access_token__";
   const refresh_token = "__refresh_token__";
   const error = "__error__";
@@ -18,22 +11,6 @@ describe("auth actions", () => {
     it("returns ACCESS_TOKEN_REQUEST as the action type", () => {
       expect(authActions.accessTokenRequested()).toEqual({
         type: actionTypes.ACCESS_TOKEN_REQUEST
-      });
-    });
-  });
-
-  describe("accessTokenRefreshed", () => {
-    it("returns ACCESS_TOKEN_REFRESHED as the action type", () => {
-      expect(authActions.accessTokenRefreshed({ access_token })).toMatchObject({
-        type: actionTypes.ACCESS_TOKEN_REFRESHED
-      });
-    });
-
-    it("returns the provided access token in the payload", () => {
-      expect(authActions.accessTokenRefreshed({ access_token })).toMatchObject({
-        payload: {
-          accessToken: access_token
-        }
       });
     });
   });
@@ -68,151 +45,58 @@ describe("auth actions", () => {
 
     it("returns the error in the payload", () => {
       expect(authActions.accessTokenFailure(error)).toMatchObject({
-        payload: new Error(error),
+        payload: new Error(error)
+      });
+    });
+
+    it("sets the error key to true", () => {
+      expect(authActions.accessTokenFailure(error)).toMatchObject({
         error: true
       });
     });
   });
 
-  describe("getAccessTokenFromRefresh", () => {
-    let store;
-    let tokenMock;
-
-    beforeEach(() => {
-      store = mockStore({});
-      tokenMock = jest.spyOn(tokenService, "getAccessTokenFromRefreshToken");
-    });
-
-    afterEach(() => {
-      store.clearActions();
-      tokenMock.mockRestore();
-    });
-
-    it("dispatches an 'accessTokenRequested' action", () => {
-      tokenMock.mockImplementation(() => Promise.resolve({ access_token }));
-
-      return store
-        .dispatch(authActions.getAccessTokenFromRefresh())
-        .then(() => {
-          const actions = store.getActions();
-          expect(actions[0]).toEqual({
-            type: actionTypes.ACCESS_TOKEN_REQUEST
-          });
-        });
-    });
-
-    it("dispatches an 'accessTokenRefreshed' action if the fetch returns data", () => {
-      tokenMock.mockImplementation(() => Promise.resolve({ access_token }));
-
-      return store
-        .dispatch(authActions.getAccessTokenFromRefresh())
-        .then(() => {
-          const actions = store.getActions();
-          expect(actions[1]).toEqual({
-            type: actionTypes.ACCESS_TOKEN_REFRESHED,
-            payload: {
-              accessToken: access_token
-            }
-          });
-        });
-    });
-
-    it("dispatches an 'accessTokenFailure' action if the fetch return an error", () => {
-      tokenMock.mockImplementation(() => Promise.resolve({ error }));
-
-      return store
-        .dispatch(authActions.getAccessTokenFromRefresh())
-        .then(() => {
-          const actions = store.getActions();
-          expect(actions[1]).toEqual({
-            type: actionTypes.ACCESS_TOKEN_FAILURE,
-            payload: new Error(error),
-            error: true
-          });
-        });
+  describe("refreshTokenRequested", () => {
+    it("returns REFRESH_TOKEN_REQUEST as the action type", () => {
+      expect(authActions.refreshTokenRequested()).toEqual({
+        type: actionTypes.REFRESH_TOKEN_REQUEST
+      });
     });
   });
 
-  describe("getAccessTokenFromCode", () => {
-    let store;
-    let tokenMock;
-
-    beforeEach(() => {
-      store = mockStore({});
-      tokenMock = jest.spyOn(tokenService, "getAccessTokenFromCode");
+  describe("refreshTokenSuccess", () => {
+    it("returns REFRESH_TOKEN_SUCCESS as the action type", () => {
+      expect(authActions.refreshTokenSuccess({ access_token })).toMatchObject({
+        type: actionTypes.REFRESH_TOKEN_SUCCESS
+      });
     });
 
-    afterEach(() => {
-      store.clearActions();
-      tokenMock.mockRestore();
+    it("returns the access token in the payload", () => {
+      expect(authActions.refreshTokenSuccess({ access_token })).toMatchObject({
+        payload: {
+          accessToken: access_token
+        }
+      });
+    });
+  });
+
+  describe("refreshTokenFailure", () => {
+    it("returns REFRESH_TOKEN_FAILURE as the action type", () => {
+      expect(authActions.refreshTokenFailure(error)).toMatchObject({
+        type: actionTypes.REFRESH_TOKEN_FAILURE
+      });
     });
 
-    it("dispatches an 'accessTokenRequested' action", () => {
-      tokenMock.mockImplementation(() =>
-        Promise.resolve({ access_token, refresh_token }));
-
-      return store
-        .dispatch(authActions.getAccessTokenFromCode(code))
-        .then(() => {
-          const actions = store.getActions();
-          expect(actions[0]).toEqual({
-            type: actionTypes.ACCESS_TOKEN_REQUEST
-          });
-        });
+    it("returns the error in the payload", () => {
+      expect(authActions.refreshTokenFailure(error)).toMatchObject({
+        payload: new Error(error)
+      });
     });
 
-    it("dispatches an 'accessTokenSucess' action if the fetch returns data", () => {
-      tokenMock.mockImplementation(() =>
-        Promise.resolve({ access_token, refresh_token }));
-
-      return store
-        .dispatch(authActions.getAccessTokenFromCode(code))
-        .then(() => {
-          const actions = store.getActions();
-          expect(actions[1]).toEqual({
-            type: actionTypes.ACCESS_TOKEN_SUCCESS,
-            payload: {
-              accessToken: access_token,
-              refreshToken: refresh_token
-            }
-          });
-        });
-    });
-
-    it("replaces the window location with '/' if successful", () => {
-      tokenMock.mockImplementation(() =>
-        Promise.resolve({ access_token, refresh_token }));
-
-      const replaceMock = jest.spyOn(window.location, "replace");
-
-      return store
-        .dispatch(authActions.getAccessTokenFromCode(code))
-        .then(() => {
-          const actions = store.getActions();
-          expect(actions[1]).toEqual({
-            type: actionTypes.ACCESS_TOKEN_SUCCESS,
-            payload: {
-              accessToken: access_token,
-              refreshToken: refresh_token
-            }
-          });
-          expect(replaceMock.mock.calls[0]).toEqual(["/"]);
-        });
-    });
-
-    it("dispatches an 'accessTokenFailure' action if the fetch retuens an error", () => {
-      tokenMock.mockImplementation(() => Promise.resolve({ error }));
-
-      return store
-        .dispatch(authActions.getAccessTokenFromCode(code))
-        .then(() => {
-          const actions = store.getActions();
-          expect(actions[1]).toEqual({
-            type: actionTypes.ACCESS_TOKEN_FAILURE,
-            payload: new Error(error),
-            error: true
-          });
-        });
+    it("sets the error key to true", () => {
+      expect(authActions.refreshTokenFailure(error)).toMatchObject({
+        error: true
+      });
     });
   });
 });
