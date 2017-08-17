@@ -13,8 +13,7 @@ class App extends Component {
   componentDidMount() {
     this.getTokenFromCallbackHandler();
     if (this.props.accessToken) {
-      // this.pollSpotifyAPI();
-    } else {
+      this.props.getCurrentTrack();
     }
   }
 
@@ -65,7 +64,7 @@ const mapDispatchToProps = dispatch => {
     getAccessTokenFromCode: code =>
       dispatch(authActions.accessTokenRequested(code)),
     getAccessTokenFromRefresh: () => dispatch(),
-    getCurrentTrack: () => {}
+    getCurrentTrack: () => dispatch(trackActions.trackRequested())
   };
 };
 

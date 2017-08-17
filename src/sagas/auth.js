@@ -1,4 +1,4 @@
-import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest } from "redux-saga/effects";
 import * as authActions from "../actions/auth";
 import * as tokenService from "../services/token";
 import {
