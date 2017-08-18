@@ -1,5 +1,6 @@
 import { SPOTIFY_ACCESS_TOKEN } from "../../constants/storage-keys";
 import { parsePlaylistURI } from "../../util/spotify";
+import transform from "./transform";
 const apiURL = "https://api.spotify.com/v1";
 
 export async function getCurrentTrack() {
@@ -14,28 +15,37 @@ export async function getCurrentTrack() {
         }
       }
     )).json();
-    const { item, context } = response;
-    const { uri } = context;
-    const trackContext = parsePlaylistURI(uri);
-    const { type, userId, playlistId } = trackContext;
-    if (type === "playlist") {
-      const { added_by: { id } } = await getTrackFromPlaylist(
-        userId,
-        playlistId
-      );
-      const user = id ? await getUserFromId(id) : null;
+    const { item, context: { uri } } = response;
+    const user = await getUserFromPlaylist(parsePlaylistURI(uri), item.id);
+    return transform({ ...user, ...item });
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+}
+
+async function getUserFromPlaylist({ userId, playlistId }, trackId) {
+  try {
+    const response = await getTrackFromPlaylist(userId, playlistId, trackId);
+    const { added_by: { id = null } } = response;
+    if (id) {
+      return await getUserFromId(id);
+    } else {
+      return {};
     }
-  } catch (e) {
-    throw new Error("Not working");
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
   }
 }
 
 async function getTrackFromPlaylist(userId, playlistId, trackId) {
   try {
     const playlistTracks = await getAllPlaylistTracks(userId, playlistId);
-    return playlistTracks.find(track => track.id === trackId);
+    return playlistTracks.find(({ track }) => track.id === trackId);
   } catch (error) {
-    throw new Error("Not working");
+    console.log(error);
+    throw new Error(error);
   }
 }
 
@@ -60,7 +70,8 @@ async function getAllPlaylistTracks(userId, playlistId) {
     }
     return tracks;
   } catch (error) {
-    throw new Error("Not working");
+    console.log(error);
+    throw new Error(error);
   }
 }
 
@@ -74,7 +85,8 @@ async function getUserFromId(id) {
       }
     })).json();
   } catch (error) {
-    throw new Error("Not working");
+    console.log(error);
+    throw new Error(error);
   }
 }
 
