@@ -27,9 +27,9 @@ export async function getCurrentTrack() {
 async function getUserFromPlaylist({ userId, playlistId }, trackId) {
   try {
     const response = await getTrackFromPlaylist(userId, playlistId, trackId);
-    const { added_by: { id = null } } = response;
-    if (id) {
-      return await getUserFromId(id);
+    const { added_by } = response;
+    if (added_by && added_by.id) {
+      return await getUserFromId(added_by.id);
     } else {
       return {};
     }

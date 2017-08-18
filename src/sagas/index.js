@@ -1,10 +1,7 @@
-import { fork } from "redux-saga/effects";
-import authSaga from "./auth";
-import trackSaga from "./tracks";
+import { all } from "redux-saga/effects";
+import { trackSagas } from "./tracks";
+import { authSagas } from "./auth";
 
-export default function*() {
-  yield [
-    fork(authSaga), // saga1 can also yield [ fork(actionOne), fork(actionTwo) ]
-    fork(trackSaga)
-  ];
+export default function* rootSaga() {
+  yield all([...trackSagas, ...authSagas]);
 }

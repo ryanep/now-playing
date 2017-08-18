@@ -1,5 +1,4 @@
 import * as actionTypes from "../constants/action-types";
-import * as tokenService from "../services/token";
 
 export function accessTokenRequested(code) {
   return {

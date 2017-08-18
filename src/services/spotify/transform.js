@@ -7,7 +7,7 @@ export default (
     album: { artists: [{ name: artist }], images: artwork },
     display_name,
     id,
-    images
+    images = []
   }
 ) => ({
   isPlaying,

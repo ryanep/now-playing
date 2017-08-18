@@ -13,7 +13,7 @@ function* getAccessToken({ payload: { code } }) {
       code
     );
     if (error) return yield put(authActions.accessTokenFailure(error));
-    window.location.replace("/");
+    window.history.pushState({}, document.title, "/");
     yield put(authActions.accessTokenSuccess({ access_token, refresh_token }));
   } catch (error) {
     yield put(authActions.accessTokenFailure(error));
@@ -33,7 +33,7 @@ function* refreshAccessToken() {
   }
 }
 
-export default function*() {
-  yield takeLatest(ACCESS_TOKEN_REQUEST, getAccessToken);
-  yield takeLatest(REFRESH_TOKEN_REQUEST, refreshAccessToken);
-}
+export const authSagas = [
+  takeLatest(ACCESS_TOKEN_REQUEST, getAccessToken),
+  takeLatest(REFRESH_TOKEN_REQUEST, refreshAccessToken)
+];
