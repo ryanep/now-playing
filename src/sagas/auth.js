@@ -6,13 +6,12 @@ import {
   REFRESH_TOKEN_REQUEST
 } from "../constants/action-types";
 
-function* getAccessToken({ payload: { code } }) {
+export function* getAccessToken({ payload: { code } }) {
   try {
     const { error, access_token, refresh_token } = yield call(
       tokenService.getAccessTokenFromCode,
       code
     );
-    if (error) return yield put(authActions.accessTokenFailure(error));
     window.history.pushState({}, document.title, "/");
     yield put(authActions.accessTokenSuccess({ access_token, refresh_token }));
   } catch (error) {
@@ -20,7 +19,7 @@ function* getAccessToken({ payload: { code } }) {
   }
 }
 
-function* refreshAccessToken() {
+export function* refreshAccessToken() {
   try {
     const {
       error,

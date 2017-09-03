@@ -12,6 +12,8 @@ import Login from "../../components/Login";
 class App extends Component {
   componentDidMount() {
     this.getTokenFromCallbackHandler();
+
+    if (this.props.accessToken) this.props.getCurrentTrack();
   }
 
   getTokenFromCallbackHandler() {

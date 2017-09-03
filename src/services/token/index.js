@@ -3,7 +3,6 @@ import { SPOTIFY_REFRESH_TOKEN } from "../../constants/storage-keys";
 const baseUrl = "https://cryptic-ridge-94461.herokuapp.com";
 
 export async function getAccessTokenFromCode(code) {
-  console.log(code);
   const response = await fetch(`${baseUrl}/swap`, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },

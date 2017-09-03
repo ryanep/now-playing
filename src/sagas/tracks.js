@@ -1,6 +1,6 @@
 import { delay } from "redux-saga";
 import { call, put, takeLatest } from "redux-saga/effects";
-import { ACCESS_TOKEN_SUCCESS } from "../constants/action-types";
+import { TRACK_REQUEST } from "../constants/action-types";
 import * as trackActions from "../actions/tracks";
 import * as spotifyService from "../services/spotify";
 
@@ -11,8 +11,9 @@ function* getCurrentTrack() {
     yield delay(1000);
     yield call(getCurrentTrack);
   } catch (error) {
+    console.log(error);
     yield put(trackActions.trackFailure(error));
   }
 }
 
-export const trackSagas = [takeLatest(ACCESS_TOKEN_SUCCESS, getCurrentTrack)];
+export const trackSagas = [takeLatest(TRACK_REQUEST, getCurrentTrack)];

@@ -9,15 +9,15 @@ export default class Background extends Component {
   };
 
   componentDidMount() {
-    this.updateCanvas(this.canvas, this.props.img).then(() => {
+    return this.updateCanvas(this.canvas, this.props.img).then(() => {
       this.setState({ loaded: true });
       this.forceUpdate();
     });
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillUpdate(nextProps) {
     this.cloneCanvasInPlace();
-    this.updateCanvas(this.canvas, nextProps.img)
+    return this.updateCanvas(this.canvas, nextProps.img)
       .then(() => this.addClassToFadeCanvas())
       .then(() => this.removeCanvasFromDom())
       .catch(error => console.log(error));
@@ -29,6 +29,7 @@ export default class Background extends Component {
     canvas.width = this.canvas.width;
     canvas.height = this.canvas.height;
     canvas.classList.add(`${styles.canvas}`);
+    canvas.id = "temp-canvas";
     ctx.drawImage(this.canvas, 0, 0);
     this.tempCanvas = canvas;
     this.container.appendChild(canvas);
