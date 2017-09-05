@@ -5,7 +5,7 @@ export default ({ name, photo }) => (
   <div className={styles.info}>
     <div className={styles.added}>
       <div className={styles.addedName}>Added by</div>
-      <div className={styles.name}>{name}</div>
+      <div id="added-by-name" className={styles.name}>{name}</div>
     </div>
     {photo && <img className={styles.photo} src={photo} alt={name} />}
   </div>

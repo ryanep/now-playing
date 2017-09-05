@@ -12,9 +12,8 @@ import Login from "../../components/Login";
 class App extends Component {
   componentDidMount() {
     this.getTokenFromCallbackHandler();
-    if (this.props.accessToken) {
-      this.pollSpotifyAPI();
-    }
+
+    if (this.props.accessToken) this.props.getCurrentTrack();
   }
 
   getTokenFromCallbackHandler() {
@@ -27,21 +26,19 @@ class App extends Component {
     }
   }
 
-  pollSpotifyAPI() {
-    this.props.getCurrentTrack();
-    setTimeout(
-      () => {
-        this.pollSpotifyAPI();
-      },
-      5000
-    );
-  }
+  // pollSpotifyAPI() {
+  //   this.props.getCurrentTrack();
+  //   setTimeout(
+  //     () => {
+  //       this.pollSpotifyAPI();
+  //     },
+  //     5000
+  //   );
+  // }
 
   render() {
     const { title, artist } = this.props.currentTrack;
-    const trackTitle = title
-      ? `${title} - ${artist}`
-      : "Login - Now Playing";
+    const trackTitle = title ? `${title} - ${artist}` : "Login - Now Playing";
 
     return (
       <div className={styles.app}>
@@ -64,10 +61,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getAccessTokenFromCode: code =>
-      dispatch(authActions.getAccessTokenFromCode(code)),
-    getAccessTokenFromRefresh: () =>
-      dispatch(authActions.getAccessTokenFromRefresh()),
-    getCurrentTrack: () => dispatch(trackActions.getCurrentTrack())
+      dispatch(authActions.accessTokenRequested(code)),
+    getAccessTokenFromRefresh: () => dispatch(),
+    getCurrentTrack: () => dispatch(trackActions.trackRequested())
   };
 };
 

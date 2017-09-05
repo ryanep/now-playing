@@ -3,8 +3,8 @@ export const parsePlaylistURI = uri => {
   if (parts[3] === "playlist") {
     return {
       type: "playlist",
-      playlistID: parts[4],
-      userID: parts[2]
+      playlistId: parts[4],
+      userId: parts[2]
     };
   } else {
     return {

@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/AddedBy renders only the name when no photo is provided 1`] = `
+<div
+  className="info"
+>
+  <div
+    className="added"
+  >
+    <div
+      className="addedName"
+    >
+      Added by
+    </div>
+    <div
+      className="name"
+      id="added-by-name"
+    >
+      __name__
+    </div>
+  </div>
+</div>
+`;
+
+exports[`components/AddedBy renders the name and photo provided 1`] = `
+<div
+  className="info"
+>
+  <div
+    className="added"
+  >
+    <div
+      className="addedName"
+    >
+      Added by
+    </div>
+    <div
+      className="name"
+      id="added-by-name"
+    >
+      __name__
+    </div>
+  </div>
+  <img
+    alt="__name__"
+    className="photo"
+    src="__photo__"
+  />
+</div>
+`;

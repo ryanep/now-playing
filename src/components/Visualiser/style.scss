@@ -10,9 +10,8 @@
 }
 
 .bar {
-	height: 20rem;
+	height: 0rem;
 	background-color: #ffffff;
-	animation: sound 0ms -2000ms linear infinite alternate;
 	margin-left: 2px;
 	flex-grow: 1;
 
@@ -25,6 +24,11 @@
 	&:first-child {
 		margin-left: 0;
 	}
+}
+
+.playing {
+	animation: sound 0ms -2000ms linear infinite alternate;
+	height: 20rem;
 }
 
 @keyframes sound {

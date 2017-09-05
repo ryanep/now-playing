@@ -1,18 +1,10 @@
 import * as actionTypes from "../constants/action-types";
-import TokenService from "../services/token";
-const tokenService = new TokenService();
 
-export function accessTokenRequested() {
+export function accessTokenRequested(code) {
   return {
-    type: actionTypes.ACCESS_TOKEN_REQUEST
-  };
-}
-
-export function accessTokenRefreshed({ access_token }) {
-  return {
-    type: actionTypes.ACCESS_TOKEN_REFRESHED,
+    type: actionTypes.ACCESS_TOKEN_REQUEST,
     payload: {
-      accessToken: access_token
+      code
     }
   };
 }
@@ -27,43 +19,33 @@ export function accessTokenSuccess({ access_token, refresh_token }) {
   };
 }
 
-export function accessTokenFailure() {
+export function accessTokenFailure(error) {
   return {
-    type: actionTypes.ACCESS_TOKEN_FAILURE
+    type: actionTypes.ACCESS_TOKEN_FAILURE,
+    payload: new Error(error),
+    error: true
   };
 }
 
-export function getAccessTokenFromRefresh() {
-  return dispatch => {
-    dispatch(accessTokenRequested());
-
-    tokenService.getAccessTokenFromRefreshToken().then(response => {
-      const { error, access_token } = response;
-      if (error) throw error;
-
-      dispatch(accessTokenRefreshed({ access_token }));
-    });
+export function refreshTokenRequested() {
+  return {
+    type: actionTypes.REFRESH_TOKEN_REQUEST
   };
 }
 
-export function getAccessTokenFromCode(code) {
-  return dispatch => {
-    dispatch(accessTokenRequested());
+export function refreshTokenSuccess({ access_token }) {
+  return {
+    type: actionTypes.REFRESH_TOKEN_SUCCESS,
+    payload: {
+      accessToken: access_token
+    }
+  };
+}
 
-    tokenService
-      .getAccessTokenFromCode(code)
-      .then(response => {
-        const {
-          error,
-          error_description,
-          refresh_token,
-          access_token
-        } = response;
-        if (error) throw new Error(error_description);
-
-        window.location.replace("/");
-        dispatch(accessTokenSuccess({ access_token, refresh_token }));
-      })
-      .catch(e => console.error(e));
+export function refreshTokenFailure(error) {
+  return {
+    type: actionTypes.REFRESH_TOKEN_FAILURE,
+    payload: new Error(error),
+    error: true
   };
 }
