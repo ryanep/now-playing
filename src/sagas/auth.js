@@ -3,7 +3,7 @@ import * as authActions from "../actions/auth";
 import * as tokenService from "../services/token";
 import {
   ACCESS_TOKEN_REQUEST,
-  REFRESH_TOKEN_REQUEST
+  ACCESS_TOKEN_EXPIRED
 } from "../constants/action-types";
 
 export function* getAccessToken({ payload: { code } }) {
@@ -24,8 +24,10 @@ export function* refreshAccessToken() {
     const {
       error,
       access_token
-    } = tokenService.getAccessTokenFromRefreshToken();
-    if (error) return yield put(authActions.refreshTokenFailure(error));
+    } = yield call(tokenService.getAccessTokenFromRefreshToken);
+    if (error) {
+      yield put(authActions.refreshTokenFailure(error));
+    }
     yield put(authActions.refreshTokenSuccess({ access_token }));
   } catch (error) {
     yield put(authActions.refreshTokenFailure(error));
@@ -34,5 +36,5 @@ export function* refreshAccessToken() {
 
 export const authSagas = [
   takeLatest(ACCESS_TOKEN_REQUEST, getAccessToken),
-  takeLatest(REFRESH_TOKEN_REQUEST, refreshAccessToken)
+  takeLatest(ACCESS_TOKEN_EXPIRED, refreshAccessToken)
 ];

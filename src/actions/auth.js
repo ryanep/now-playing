@@ -27,6 +27,12 @@ export function accessTokenFailure(error) {
   };
 }
 
+export function accessTokenExpired() {
+  return {
+    type: actionTypes.ACCESS_TOKEN_EXPIRED
+  }
+}
+
 export function refreshTokenRequested() {
   return {
     type: actionTypes.REFRESH_TOKEN_REQUEST

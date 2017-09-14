@@ -14,12 +14,16 @@ export async function getCurrentTrack() {
           Authorization: `Bearer ${accessToken}`
         }
       }
-    )).json();
-    const { item, context: { uri }, progress_ms, is_playing } = response;
+    ));
+    if (!response.ok || response.status === 204) {
+      return Promise.reject({status: response.status});
+    }
+
+    const { item, context: { uri }, progress_ms, is_playing } = await response.json();
     const user = await getUserFromPlaylist(parsePlaylistURI(uri), item.id);
     return transform({ ...item, ...user, progress_ms, is_playing });
   } catch (error) {
-    console.log(error);
+    console.log('error is ', error);
     throw new Error(error);
   }
 }
@@ -52,11 +56,12 @@ async function getTrackFromPlaylist(userId, playlistId, trackId) {
 async function getAllPlaylistTracks(userId, playlistId) {
   try {
     const accessToken = localStorage.getItem(SPOTIFY_ACCESS_TOKEN);
+    let offset = 0;
     let moreTracks = true;
     let tracks = [];
     while (moreTracks) {
       const response = await (await fetch(
-        `${apiURL}/users/${userId}/playlists/${playlistId}/tracks`,
+        `${apiURL}/users/${userId}/playlists/${playlistId}/tracks?offset=${offset}`,
         {
           method: "GET",
           headers: {
@@ -64,9 +69,10 @@ async function getAllPlaylistTracks(userId, playlistId) {
           }
         }
       )).json();
-      const { items, next } = response;
+      const { items, next, total } = response;
       tracks = [...tracks, ...items];
-      moreTracks = next;
+      offset = offset + items.length;
+      if (tracks.length === total) moreTracks = false;
     }
     return tracks;
   } catch (error) {

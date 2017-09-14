@@ -15,6 +15,12 @@ export function trackUpdated(track) {
   };
 }
 
+export function trackNotPlaying() {
+  return {
+    type: actionTypes.TRACK_NOT_PLAYING
+  }
+}
+
 export function trackChanged(track) {
   return {
     type: actionTypes.TRACK_CHANGED,

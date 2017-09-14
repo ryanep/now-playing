@@ -13,10 +13,15 @@ export async function getAccessTokenFromCode(code) {
 
 export async function getAccessTokenFromRefreshToken() {
   let refreshToken = localStorage.getItem(SPOTIFY_REFRESH_TOKEN);
+  console.log(refreshToken);
   const response = await fetch(`${baseUrl}/refresh`, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: `refresh_token=${refreshToken}`
   });
+  if (!response.ok) {
+    const {error_description} = await response.json();
+    throw new Error (error_description)
+  }
   return response.json();
 }

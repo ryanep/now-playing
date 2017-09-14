@@ -26,24 +26,15 @@ class App extends Component {
     }
   }
 
-  // pollSpotifyAPI() {
-  //   this.props.getCurrentTrack();
-  //   setTimeout(
-  //     () => {
-  //       this.pollSpotifyAPI();
-  //     },
-  //     5000
-  //   );
-  // }
-
   render() {
-    const { title, artist } = this.props.currentTrack;
-    const trackTitle = title ? `${title} - ${artist}` : "Login - Now Playing";
+    if (this.props.currentTrack) {
+      const { title, artist } = this.props.currentTrack;
+    }
 
     return (
       <div className={styles.app}>
-        <Helmet title={trackTitle} />
-        {this.props.accessToken && this.props.currentTrack.title
+        <Helmet title="Login - Now Playing" />
+        {this.props.accessToken
           ? <Track track={this.props.currentTrack} />
           : <Login />}
       </div>

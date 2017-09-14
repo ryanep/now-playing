@@ -19,6 +19,11 @@ export default function auth(state = initialState, action) {
         ...state,
         accessToken: action.payload.accessToken
       };
+    case actionTypes.REFRESH_TOKEN_FAILURE:
+      return {
+        accessToken: null,
+        refreshToken: null
+      };
     default:
       return state;
   }

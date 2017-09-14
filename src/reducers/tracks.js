@@ -1,7 +1,7 @@
 import * as actionTypes from "../constants/action-types";
 
 const initialState = {
-  currentTrack: {},
+  currentTrack: null,
   previousTracks: []
 };
 
@@ -15,10 +15,13 @@ export default function tracks(state = initialState, action) {
         currentTrack: { ...track }
       };
     }
-    case actionTypes.TRACK_FAILURE: {
-      // Do API error handling here
-      return { ...state };
-    }
+    case actionTypes.TRACK_NOT_PLAYING:
+    case actionTypes.TRACK_FAILURE:
+      return {
+        ...state,
+        previousTracks: [...state.previousTracks, state.currentTrack],
+        currentTrack: null
+      };
     default:
       return state;
   }
