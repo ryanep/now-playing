@@ -1,5 +1,5 @@
-import * as storageKeys from "../constants/storage-keys";
-import * as actionTypes from "../constants/action-types";
+import * as storageKeys from '../constants/storage-keys';
+import * as actionTypes from '../constants/action-types';
 
 const initialState = {
   accessToken: localStorage.getItem(storageKeys.SPOTIFY_ACCESS_TOKEN),
@@ -20,6 +20,7 @@ export default function auth(state = initialState, action) {
         accessToken: action.payload.accessToken
       };
     case actionTypes.REFRESH_TOKEN_FAILURE:
+    case actionTypes.ACCESS_TOKEN_FAILURE:
       return {
         accessToken: null,
         refreshToken: null
