@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/Song renders correctly 1`] = `
+<div
+  className="song"
+>
+  <div
+    className="album"
+  >
+    <img
+      alt="__artist__ - __title__"
+      className="artwork"
+      src="http://localhost/__url__"
+    />
+    <div
+      className="track"
+    >
+      <h1
+        className="title"
+      >
+        __title__
+      </h1>
+      <div
+        className="trackInfo"
+      >
+        <h2
+          className="artist"
+        >
+          __artist__
+        </h2>
+        <div
+          className="info"
+        >
+          <div
+            className="added"
+          >
+            <div
+              className="addedName"
+            >
+              Added by
+            </div>
+            <div
+              className="name"
+              id="added-by-name"
+            >
+              __added_by_name__
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <progress
+      className="progress"
+      max={NaN}
+      value={NaN}
+    />
+    <div
+      className="visualiser"
+    >
+      <div
+        className="bar playing"
+      />
+      <div
+        className="bar playing"
+      />
+      <div
+        className="bar playing"
+      />
+      <div
+        className="bar playing"
+      />
+      <div
+        className="bar playing"
+      />
+      <div
+        className="bar playing"
+      />
+      <div
+        className="bar playing"
+      />
+      <div
+        className="bar playing"
+      />
+      <div
+        className="bar playing"
+      />
+      <div
+        className="bar playing"
+      />
+      <div
+        className="bar playing"
+      />
+      <div
+        className="bar playing"
+      />
+    </div>
+  </div>
+</div>
+`;
