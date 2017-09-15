@@ -16,12 +16,13 @@ export default function tracks(state = initialState, action) {
       };
     }
     case actionTypes.TRACK_UPDATED: {
-      const { track: { progress } } = action.payload;
+      const { track: { progress, isPlaying } } = action.payload;
       return {
         ...state,
         currentTrack: {
           ...state.currentTrack,
-          progress
+          progress,
+          isPlaying
         }
       };
     }
