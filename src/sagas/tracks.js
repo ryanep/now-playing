@@ -1,17 +1,25 @@
 import { delay } from "redux-saga";
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest, select } from "redux-saga/effects";
 import { TRACK_REQUEST } from "../constants/action-types";
 import * as trackActions from "../actions/tracks";
 import * as authActions from '../actions/auth';
 import * as spotifyService from "../services/spotify";
 
+const currentTrackTitle = state => state.tracks.currentTrack && state.tracks.currentTrack.title;
+
 function* getCurrentTrack() {
   try {
+    const currentTitle = yield select(currentTrackTitle);
     const track = yield call(spotifyService.getCurrentTrack);
-    yield put(trackActions.trackChanged(track));
+    if (currentTitle === track.title) {
+      yield put(trackActions.trackUpdated(track));
+    } else {
+      yield put(trackActions.trackChanged(track));
+    }
     yield delay(1000);
     yield call(getCurrentTrack);
   } catch (error) {
+    console.log(error);
     const { status = null } = error;
     if (status === 204) {
       yield put(trackActions.trackNotPlaying());

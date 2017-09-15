@@ -4,17 +4,20 @@
     display: block;
     background-color: #666666;
     z-index: 0;
+    overflow: hidden;
+    position: relative;
 }
 
-.canvas {
-    height: 100vh;
-    width: 100vw;
+.image {
+    height: 130vh;
+    width: 130vw;
     display: block;
     position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0.5;
+    top: -15vh;
+    left: -15vw;
+    opacity: 1;
     transition: opacity 0.5s ease-in-out;
+    filter: blur(50px);
 }
 
 .hidden {

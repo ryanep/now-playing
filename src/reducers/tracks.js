@@ -15,6 +15,16 @@ export default function tracks(state = initialState, action) {
         currentTrack: { ...track }
       };
     }
+    case actionTypes.TRACK_UPDATED: {
+      const { track: { progress } } = action.payload;
+      return {
+        ...state,
+        currentTrack: {
+          ...state.currentTrack,
+          progress
+        }
+      };
+    }
     case actionTypes.TRACK_NOT_PLAYING:
     case actionTypes.TRACK_FAILURE:
       return {

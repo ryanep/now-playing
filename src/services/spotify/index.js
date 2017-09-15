@@ -18,9 +18,12 @@ export async function getCurrentTrack() {
     if (!response.ok || response.status === 204) {
       return Promise.reject({status: response.status});
     }
-
-    const { item, context: { uri }, progress_ms, is_playing } = await response.json();
-    const user = await getUserFromPlaylist(parsePlaylistURI(uri), item.id);
+    const { item, context, progress_ms, is_playing } = await response.json();
+    const { uri = null } = context || {};
+    let user = {};
+    if (uri) {
+      user = await getUserFromPlaylist(parsePlaylistURI(uri), item.id);
+    }
     return transform({ ...item, ...user, progress_ms, is_playing });
   } catch (error) {
     console.log('error is ', error);
