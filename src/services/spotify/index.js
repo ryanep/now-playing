@@ -18,12 +18,8 @@ export async function getCurrentTrack() {
     if (!response.ok || response.status === 204) {
       return Promise.reject({status: response.status});
     }
-    const { item, context, progress_ms, is_playing } = await response.json();
-    const { uri = null } = context || {};
-    let user = {};
-    if (uri) {
-      user = await getUserFromPlaylist(parsePlaylistURI(uri), item.id);
-    }
+    const { item, context = {}, progress_ms, is_playing } = await response.json();
+    const user = await getUserFromPlaylist(parsePlaylistURI(context), item.id);
     return transform({ ...item, ...user, progress_ms, is_playing });
   } catch (error) {
     console.log('error is ', error);
@@ -33,6 +29,7 @@ export async function getCurrentTrack() {
 
 async function getUserFromPlaylist({ userId, playlistId }, trackId) {
   try {
+    if (!userId || !playlistId) return;
     const response = await getTrackFromPlaylist(userId, playlistId, trackId);
     const { added_by } = response;
     if (added_by && added_by.id) {
@@ -63,7 +60,7 @@ async function getAllPlaylistTracks(userId, playlistId) {
     let moreTracks = true;
     let tracks = [];
     while (moreTracks) {
-      const response = await (await fetch(
+      const response = await fetch(
         `${apiURL}/users/${userId}/playlists/${playlistId}/tracks?offset=${offset}`,
         {
           method: "GET",
@@ -71,8 +68,11 @@ async function getAllPlaylistTracks(userId, playlistId) {
             Authorization: `Bearer ${accessToken}`
           }
         }
-      )).json();
-      const { items, next, total } = response;
+      );
+      if (!response.ok || response.status === 204) {
+        return Promise.reject({status: response.status});
+      }
+      const { items, next, total } = await response.json();
       tracks = [...tracks, ...items];
       offset = offset + items.length;
       if (tracks.length === total) moreTracks = false;

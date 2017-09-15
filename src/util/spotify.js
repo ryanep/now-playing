@@ -1,4 +1,5 @@
-export const parsePlaylistURI = uri => {
+export const parsePlaylistURI = ({ uri = null }) => {
+  if (!uri) return { type: "unknown" };
   const parts = uri.split(":");
   if (parts[3] === "playlist") {
     return {
