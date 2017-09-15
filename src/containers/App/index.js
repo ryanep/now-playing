@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import Helmet from "react-helmet";
-import styles from "./style.scss";
-import * as authActions from "../../actions/auth";
-import * as trackActions from "../../actions/tracks";
-import queryString from "query-string";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
+import styles from './style.scss';
+import * as authActions from '../../actions/auth';
+import * as trackActions from '../../actions/tracks';
+import queryString from 'query-string';
 
-import Track from "../../components/Track";
-import Login from "../../components/Login";
+import Track from '../../components/Track';
+import Login from '../../components/Login';
 
-class App extends Component {
+export class App extends Component {
   componentDidMount() {
     this.getTokenFromCallbackHandler();
 
@@ -17,9 +17,8 @@ class App extends Component {
   }
 
   getTokenFromCallbackHandler() {
-    if (window.location.pathname === "/cb") {
+    if (window.location.pathname === '/cb') {
       let { code } = queryString.parse(window.location.search);
-
       if (code) {
         this.props.getAccessTokenFromCode(code);
       }
@@ -34,9 +33,11 @@ class App extends Component {
     return (
       <div className={styles.app}>
         <Helmet title="Login - Now Playing" />
-        {this.props.accessToken
-          ? <Track track={this.props.currentTrack} />
-          : <Login />}
+        {this.props.accessToken ? (
+          <Track track={this.props.currentTrack} />
+        ) : (
+          <Login />
+        )}
       </div>
     );
   }
@@ -53,7 +54,6 @@ const mapDispatchToProps = dispatch => {
   return {
     getAccessTokenFromCode: code =>
       dispatch(authActions.accessTokenRequested(code)),
-    getAccessTokenFromRefresh: () => dispatch(),
     getCurrentTrack: () => dispatch(trackActions.trackRequested())
   };
 };
