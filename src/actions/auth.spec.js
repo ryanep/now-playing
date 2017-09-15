@@ -9,9 +9,14 @@ describe("actions/auth", () => {
 
   describe("accessTokenRequested", () => {
     it("returns ACCESS_TOKEN_REQUEST as the action type", () => {
-      expect(authActions.accessTokenRequested(code)).toEqual({
-        type: actionTypes.ACCESS_TOKEN_REQUEST,
-        payload: {
+      expect(authActions.accessTokenRequested(code)).toMatchObject({
+        type: actionTypes.ACCESS_TOKEN_REQUEST
+      });
+    });
+
+    it('returns the code in the payload', () => {
+      expect(authActions.accessTokenRequested(code)).toMatchObject({
+        payload:  {
           code
         }
       });
