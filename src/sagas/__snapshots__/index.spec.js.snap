@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sagas/index exposes the expected shape 1`] = `
+Object {
+  "@@redux-saga/IO": true,
+  "ALL": Array [
+    Object {
+      "@@redux-saga/IO": true,
+      "FORK": Object {
+        "args": Array [
+          "TRACK_REQUEST",
+          [Function],
+        ],
+        "context": null,
+        "fn": [Function],
+      },
+    },
+    Object {
+      "@@redux-saga/IO": true,
+      "FORK": Object {
+        "args": Array [
+          "ACCESS_TOKEN_REQUEST",
+          [Function],
+        ],
+        "context": null,
+        "fn": [Function],
+      },
+    },
+    Object {
+      "@@redux-saga/IO": true,
+      "FORK": Object {
+        "args": Array [
+          "ACCESS_TOKEN_EXPIRED",
+          [Function],
+        ],
+        "context": null,
+        "fn": [Function],
+      },
+    },
+  ],
+}
+`;
