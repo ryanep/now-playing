@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sagas/tracks getCurrentTrack calls delay, waiting for 1 second 1`] = `
+Promise {
+  "@@redux-saga/CANCEL_PROMISE": [Function],
+}
+`;
+
+exports[`sagas/tracks getCurrentTrack error handling api response status 204 calls delay, waiting for 1 second 1`] = `
+Promise {
+  "@@redux-saga/CANCEL_PROMISE": [Function],
+}
+`;
