@@ -1,10 +1,10 @@
-import { call, put, takeLatest } from "redux-saga/effects";
-import * as authActions from "../actions/auth";
-import * as tokenService from "../services/token";
+import { call, put, takeLatest } from 'redux-saga/effects';
+import * as authActions from '../actions/auth';
+import * as tokenService from '../services/token';
 import {
   ACCESS_TOKEN_REQUEST,
   ACCESS_TOKEN_EXPIRED
-} from "../constants/action-types";
+} from '../constants/action-types';
 
 export function* getAccessToken({ payload: { code } }) {
   try {
@@ -12,7 +12,7 @@ export function* getAccessToken({ payload: { code } }) {
       tokenService.getAccessTokenFromCode,
       code
     );
-    window.history.pushState({}, document.title, "/");
+    yield call(window.history.pushState, {}, document.title, '/');
     yield put(authActions.accessTokenSuccess({ access_token, refresh_token }));
   } catch (error) {
     yield put(authActions.accessTokenFailure(error));
@@ -21,10 +21,9 @@ export function* getAccessToken({ payload: { code } }) {
 
 export function* refreshAccessToken() {
   try {
-    const {
-      error,
-      access_token
-    } = yield call(tokenService.getAccessTokenFromRefreshToken);
+    const { error, access_token } = yield call(
+      tokenService.getAccessTokenFromRefreshToken
+    );
     if (error) {
       yield put(authActions.refreshTokenFailure(error));
     }
